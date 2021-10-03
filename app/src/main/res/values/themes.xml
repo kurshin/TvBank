@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="Theme.TvBank" parent="@style/Theme.AppCompat.NoActionBar" />
+
+    <style name="Theme.Splash" parent="Theme.TvBank">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="colorPrimary">@color/test_background</item>
+        <item name="colorPrimaryVariant">@color/test_background</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>
