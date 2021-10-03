@@ -1,3 +1,5 @@
 <resources>
     <color name="test_background">#ffaa3f</color>
+    <color name="purple">#7E52CC</color>
+    <color name="purple_pressed">#673AB7</color>
 </resources>

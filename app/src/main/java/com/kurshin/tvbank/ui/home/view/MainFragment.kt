@@ -24,7 +24,7 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.txtTest.setOnClickListener {
+        binding.btnPrivat.setOnClickListener {
             findNavController().navigate(R.id.action_nav_home_to_nav_privat)
         }
     }

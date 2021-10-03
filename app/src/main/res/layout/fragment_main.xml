@@ -4,13 +4,15 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-    <TextView
-        android:id="@+id/txtTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/btn_privat"
+        android:layout_width="@dimen/circle_button_width"
+        android:layout_height="@dimen/circle_button_width"
+        android:background="@drawable/bg_circle_button"
+        android:text="@string/privat24"
+        android:textAllCaps="false"
+        android:textSize="20sp"
         android:layout_gravity="center"
-        android:textColor="@android:color/white"
-        android:focusable="true"
         android:focusedByDefault="true"
-        android:text="some"/>
+        android:textColor="@android:color/white" />
 </FrameLayout>
