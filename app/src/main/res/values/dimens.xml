@@ -1,6 +1,7 @@
 <resources>
     <dimen name="circle_button_width">150dp</dimen>
     <dimen name="circle_button_stroke">2dp</dimen>
-    <dimen name="cell_day_width">60dp</dimen>
+    <dimen name="cell_day_width">64dp</dimen>
+    <dimen name="cell_day_margin">8dp</dimen>
     <dimen name="cell_day_height">30dp</dimen>
 </resources>
