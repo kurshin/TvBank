@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Theme.TvBank" parent="@style/Theme.AppCompat.NoActionBar" />
+    <style name="Theme.TvBank" parent="@style/Theme.Leanback" />
 
     <style name="Theme.Splash" parent="Theme.TvBank">
         <item name="android:windowBackground">@drawable/bg_splash</item>

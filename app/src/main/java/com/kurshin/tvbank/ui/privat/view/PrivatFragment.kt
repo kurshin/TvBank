@@ -1,29 +1,41 @@
 package com.kurshin.tvbank.ui.privat.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.kurshin.tvbank.R
+import androidx.leanback.app.BrowseSupportFragment
 import com.kurshin.tvbank.ui.privat.view_model.PrivatViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+import androidx.leanback.widget.*
+import com.kurshin.tvbank.ui.privat.builder.AdapterBuilder
+
 @AndroidEntryPoint
-class PrivatFragment : Fragment() {
+class PrivatFragment : BrowseSupportFragment() {
 
     private val viewModel: PrivatViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_privat, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getSomeData()
+        adapter = AdapterBuilder.buildMonthAdapter()
+
+        onItemViewClickedListener = OnItemViewClickedListener { _, item, _, row ->
+            onMonthClicked(row.id, item)
+        }
+    }
+
+    fun onBackPressed(): Boolean {
+        if (!isShowingHeaders) {
+            startHeadersTransition(true)
+            return true
+        }
+
+        return false
+    }
+
+    private fun onMonthClicked(monthId: Long, dayData: Any) {
+
     }
 }
+
+
