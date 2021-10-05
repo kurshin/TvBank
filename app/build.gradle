@@ -83,8 +83,13 @@ dependencies {
     def retrofitVersion = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-simplexml:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-scalars:2.5.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+
+    // DigestUtils
+    implementation 'commons-codec:commons-codec:1.11'
 
     // View Binding Delegate
     implementation "com.kirich1409.viewbindingpropertydelegate:viewbindingpropertydelegate:1.4.1"
