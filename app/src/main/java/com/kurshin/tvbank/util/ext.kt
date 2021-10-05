@@ -2,6 +2,7 @@ package com.kurshin.tvbank.util
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.kurshin.tvbank.BuildConfig
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -22,3 +23,6 @@ fun LocalDate.toDayStr() : String {
     val pattern = DateTimeFormatter.ofPattern("dd EEE")
     return format(pattern)
 }
+
+val isDebug: Boolean
+    get() = BuildConfig.DEBUG && BuildConfig.BUILD_TYPE == "debug"

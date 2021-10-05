@@ -27,5 +27,7 @@ class MainFragment : Fragment() {
         binding.btnPrivat.setOnClickListener {
             findNavController().navigate(R.id.action_nav_home_to_nav_privat)
         }
+
+        findNavController().navigate(R.id.action_nav_home_to_nav_privat)
     }
 }
