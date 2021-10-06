@@ -23,10 +23,23 @@ class NetworkRepository @Inject constructor(
         privatApi.currentBalance(getBalanceRequest())
     }
 
+    suspend fun getBalanceHistory(day1: String, day2: String): BinaryResult<ResponseBalance> = safeCall {
+        privatApi.balanceHistory(getBalanceHistoryRequest(day1, day2))
+    }
+
     private fun getBalanceRequest(): String {
         val data = Data("cmt", listOf(
             Prop("cardnum", accountInfo.cardNumber),
             Prop("country", "UA")
+        ), "0", "0")
+        return getDataRequest(data)
+    }
+
+    private fun getBalanceHistoryRequest(day: String, day2: String): String {
+        val data = Data("cmt", listOf(
+            Prop("card", accountInfo.cardNumber),
+            Prop("sd", day),
+            Prop("ed", day2)
         ), "0", "0")
         return getDataRequest(data)
     }

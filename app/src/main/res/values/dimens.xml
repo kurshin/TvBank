@@ -4,4 +4,9 @@
     <dimen name="cell_day_width">64dp</dimen>
     <dimen name="cell_day_margin">8dp</dimen>
     <dimen name="cell_day_height">30dp</dimen>
+
+    <dimen name="one">8dp</dimen>
+    <dimen name="two">16dp</dimen>
+    <dimen name="three">24dp</dimen>
+    <dimen name="four">32dp</dimen>
 </resources>

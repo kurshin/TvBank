@@ -1,4 +1,4 @@
-package com.kurshin.tvbank.ui.privat.presenter
+package com.kurshin.tvbank.ui.privat24.calendar.presenter
 
 import android.graphics.Color
 import android.view.Gravity
@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.leanback.widget.Presenter
 import com.kurshin.tvbank.R
 import com.kurshin.tvbank.util.toDayStr
+import java.io.Serializable
 import java.time.LocalDate
 
 class DayPresenter : Presenter() {
@@ -37,7 +38,7 @@ class DayPresenter : Presenter() {
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {}
 }
 
-data class DayData(val type: Type = Type.DAY, val title: String = "", val day: LocalDate = LocalDate.MIN) {
+data class DayData(val type: Type = Type.DAY, val title: String = "", val day: LocalDate = LocalDate.MIN): Serializable {
 
     fun isDay() = type == Type.DAY
 

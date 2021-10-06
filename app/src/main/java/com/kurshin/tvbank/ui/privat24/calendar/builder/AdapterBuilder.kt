@@ -1,4 +1,4 @@
-package com.kurshin.tvbank.ui.privat.builder
+package com.kurshin.tvbank.ui.privat24.calendar.builder
 
 import android.content.res.Resources
 import androidx.leanback.widget.ArrayObjectAdapter
@@ -6,8 +6,8 @@ import androidx.leanback.widget.HeaderItem
 import androidx.leanback.widget.ListRow
 import androidx.leanback.widget.ListRowPresenter
 import com.kurshin.tvbank.R
-import com.kurshin.tvbank.ui.privat.presenter.DayData
-import com.kurshin.tvbank.ui.privat.presenter.DayPresenter
+import com.kurshin.tvbank.ui.privat24.calendar.presenter.DayData
+import com.kurshin.tvbank.ui.privat24.calendar.presenter.DayPresenter
 import java.time.LocalDate
 
 object AdapterBuilder {
@@ -27,7 +27,6 @@ object AdapterBuilder {
 
     private fun getMonthData(monthIndex: Int, date: LocalDate, fullMonthStr: String):  RowMonthData {
         val listRowAdapter = ArrayObjectAdapter(DayPresenter())
-        listRowAdapter.add(DayData(DayData.Type.FULL_MONTH, fullMonthStr))
 
         var tempCalendar = LocalDate.of(date.year, monthIndex, 1)
         val monthName = tempCalendar.month.name
@@ -38,6 +37,7 @@ object AdapterBuilder {
             tempCalendar.lengthOfMonth()
         }
 
+        listRowAdapter.add(DayData(DayData.Type.FULL_MONTH, fullMonthStr, tempCalendar))
         for (day in 1..endMonthDay) {
             listRowAdapter.add(DayData(day = tempCalendar))
             tempCalendar = tempCalendar.plusDays(1)

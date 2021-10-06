@@ -17,7 +17,23 @@
 
     <fragment
         android:id="@+id/nav_privat"
-        android:name="com.kurshin.tvbank.ui.privat.view.PrivatFragment"
+        android:name="com.kurshin.tvbank.ui.privat24.calendar.view.PrivatFragment"
+        android:label="@string/app_name" >
+
+        <action
+            android:id="@+id/action_nav_privat_to_nav_privat_day_detail"
+            app:destination="@id/nav_privat_day_detail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_privat_day_detail"
+        android:name="com.kurshin.tvbank.ui.privat24.day_detail.view.DayDetailFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_privat" />
+        tools:layout="@layout/fragment_privat_day_detail">
+
+        <argument
+            android:name="dayData"
+            app:argType="com.kurshin.tvbank.ui.privat24.calendar.presenter.DayData"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

@@ -20,19 +20,29 @@ import java.time.format.DateTimeFormatter
 val FragmentManager.currentNavigationFragment: Fragment?
     get() = primaryNavigationFragment?.childFragmentManager?.fragments?.first()
 
+val patternDate: DateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyy")
 fun LocalDate.toDateStr() : String {
-    val pattern = DateTimeFormatter.ofPattern("dd MMM yyy")
-    return format(pattern)
+    return format(patternDate)
 }
 
+val patternYear: DateTimeFormatter = DateTimeFormatter.ofPattern("yyy")
 fun LocalDate.toYearStr() : String {
-    val pattern = DateTimeFormatter.ofPattern("yyy")
-    return format(pattern)
+    return format(patternYear)
 }
 
+val patternDay: DateTimeFormatter = DateTimeFormatter.ofPattern("dd EEE")
 fun LocalDate.toDayStr() : String {
-    val pattern = DateTimeFormatter.ofPattern("dd EEE")
-    return format(pattern)
+    return format(patternDay)
+}
+
+val patternPrivat: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyy")
+fun LocalDate.toPrivatStr() : String {
+    return format(patternPrivat)
+}
+
+val patternPrivatTitle: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM yyy")
+fun LocalDate.toPrivatTitle() : String {
+    return format(patternPrivatTitle)
 }
 
 val isDebug: Boolean

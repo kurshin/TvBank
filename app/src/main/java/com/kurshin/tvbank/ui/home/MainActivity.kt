@@ -3,7 +3,7 @@ package com.kurshin.tvbank.ui.home
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.kurshin.tvbank.R
-import com.kurshin.tvbank.ui.privat.view.PrivatFragment
+import com.kurshin.tvbank.ui.privat24.calendar.view.PrivatFragment
 import com.kurshin.tvbank.util.currentNavigationFragment
 import dagger.hilt.android.AndroidEntryPoint
 
