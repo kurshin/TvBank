@@ -2,7 +2,6 @@ package com.kurshin.tvbank.network.interceptor
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -11,6 +10,7 @@ import java.io.IOException
 import java.nio.charset.Charset
 import javax.inject.Inject
 import javax.inject.Singleton
+import javax.xml.parsers.DocumentBuilderFactory
 
 @Singleton
 class ErrorInterceptor @Inject constructor(
@@ -23,7 +23,7 @@ class ErrorInterceptor @Inject constructor(
         val response: Response = chain.proceed(request)
         val body = response.body
 
-        if (body?.contentType() != null && body.contentType()!!.subtype.toLowerCase() == "json") {
+        if (body?.contentType() != null && body.contentType()!!.subtype.toLowerCase() == "xml") {
             var errorMessage = ""
             var success = true
             try {
@@ -32,18 +32,15 @@ class ErrorInterceptor @Inject constructor(
                 // Clone(!) the existing buffer is they can only read once so we still want to pass the original one to the chain.
                 val json: String = source.buffer.clone()
                     .readString(body.contentType()!!.charset(Charset.forName("UTF-8"))!!)
-                val obj = jsonParser.parse(json)
-                // Capture success state and probably message.
-                if (obj is JsonObject && obj.has("success")) {
-                    success = obj["success"].asBoolean
-                }
-                if (!success) {
-                    if (obj is JsonObject && obj.has("result")) {
-                        errorMessage =
-                            obj.get("debug")?.asJsonObject?.get("result")?.asJsonObject?.get("message")?.asString
-                                ?: obj.get("message")?.asString ?: obj.toString()
-                        Log.i("1111", "Server error occurred: $obj");
-                    }
+
+                val builderFactory = DocumentBuilderFactory.newInstance()
+                val docBuilder = builderFactory.newDocumentBuilder()
+                val doc = docBuilder.parse(source.buffer.clone().inputStream())
+
+                val responseElement = doc.getElementsByTagName("error")
+                if (responseElement.length > 0) {
+                    errorMessage = responseElement.item(0).attributes.item(0).nodeValue
+                    success = false
                 }
             } catch (t: Throwable) {
                 Log.i("1111", "Error parsing response from server: ", t)
