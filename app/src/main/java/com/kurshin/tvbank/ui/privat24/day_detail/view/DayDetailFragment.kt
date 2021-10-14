@@ -12,7 +12,7 @@ import com.kurshin.tvbank.databinding.FragmentPrivatDayDetailBinding
 import com.kurshin.tvbank.ui.privat24.calendar.presenter.DayData
 import com.kurshin.tvbank.ui.privat24.day_detail.view_model.PrivatDetailViewModel
 import com.kurshin.tvbank.util.showDialog
-import com.kurshin.tvbank.util.toPrivatStr
+import com.kurshin.tvbank.util.toPrivatRequestStr
 import com.kurshin.tvbank.util.toPrivatTitle
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -44,16 +44,15 @@ class DayDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupObservables()
         if (dayData.isDay()) {
-            val dateStr = dayData.day.toPrivatStr()
-            viewModel.getBalanceHistory(dateStr)
+            val dateStr = dayData.day.toPrivatRequestStr()
+            viewModel.getBalanceHistory(dayData.day)
         } else {
-            val monthStartDate = dayData.day.toPrivatStr()
             val monthEndDate = LocalDate.of(
                 dayData.day.year,
                 dayData.day.month,
                 dayData.day.lengthOfMonth()
-            ).toPrivatStr()
-            viewModel.getBalanceHistory(monthStartDate, monthEndDate)
+            )
+            viewModel.getBalanceHistory(dayData.day, monthEndDate)
         }
     }
 
@@ -62,13 +61,10 @@ class DayDetailFragment: Fragment() {
             var cashAmount = 0.0
             var text = ""
 
-            it.info.statements?.statement?.forEach { transact ->
+            it.forEach { transact ->
 
                 text += "${transact.amount} - ${transact.description}\n"
-
-                if (!transact.description.contains("51**31")) {
-                    cashAmount += transact.cardamount.replace(" UAH", "").toDouble()
-                }
+                cashAmount += transact.amount
             }
 
             binding.testInfo.text = text

@@ -1,30 +1,26 @@
 package com.kurshin.tvbank.db
 
-import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
-import com.kurshin.tvbank.db.entity.ReportEntity
+import androidx.room.*
+import com.kurshin.tvbank.db.entity.BalanceEntity
 
 @Dao
 interface Privat24Dao {
 
     @Insert
-    suspend fun add(entity: ReportEntity)
+    suspend fun add(entity: BalanceEntity): Long
 
-    @Query("SELECT * FROM ReportEntity ORDER BY created_at DESC")
-    fun getAllPinsLiveData(): LiveData<List<ReportEntity>>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addAll(entityList: List<BalanceEntity>): List<Long>
 
-    @Query("SELECT * FROM ReportEntity where server_id = 0")
-    suspend fun getAllNotReportedPins(): List<ReportEntity>
-
-    @Query("SELECT EXISTS(SELECT * FROM ReportEntity WHERE server_id = :serverId)")
-    fun isRowIsExist(serverId : Long) : Boolean
+    @Query("SELECT * FROM BalanceEntity WHERE trandate >= :date AND trandate <= :dateEnd ORDER BY trantime")
+    suspend fun getBalancePerDate(date: Long, dateEnd: Long): List<BalanceEntity>
 
     @Update
-    suspend fun update(entity: ReportEntity)
+    suspend fun update(entity: BalanceEntity)
 
-    @Query("DELETE FROM ReportEntity")
+    @Query("DELETE FROM BalanceEntity")
     suspend fun deleteAll()
+
+    @Query("DELETE FROM BalanceEntity  WHERE trandate = :date")
+    suspend fun deleteDate(date: Long)
 }

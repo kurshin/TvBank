@@ -1,5 +1,8 @@
 package com.kurshin.tvbank.network.model.balance_response
 
+import com.kurshin.tvbank.db.entity.BalanceEntity
+import com.kurshin.tvbank.util.toTranDate
+import com.kurshin.tvbank.util.toTranTime
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Root
 
@@ -32,4 +35,22 @@ data class Statement @JvmOverloads constructor(
 
     @field:Attribute(name = "description") @param:Attribute(name = "description")
     val description: String
-)
+) {
+
+
+    fun toBalanceEntity(): BalanceEntity {
+        return BalanceEntity().also {
+            it.currency = cardamount.substringAfterLast(" ")
+            it.card = card
+            it.appcode = appcode
+            it.trandate = trandate.toTranDate()
+            it.trantime = trantime.toTranTime(trandate)
+            it.amount = cardamount.replace(" ${it.currency}", "").toDouble().round()
+            it.terminal = terminal
+            it.description = description
+            it.rest = rest.replace(" ${it.currency}", "").toDouble().round()
+        }
+    }
+}
+
+fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(this).toDouble()

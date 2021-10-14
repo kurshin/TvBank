@@ -16,10 +16,22 @@ class PreferencesRepository @Inject constructor(
         "",
         "",
     ))
+
+    var currentBalance: CurrentBalance by prefs.json(Gson(), CurrentBalance(
+        "0.0",
+        "UAH",
+        0
+    ))
 }
 
 data class AccountInfo(
     val password: String,
     val userId: String,
     val cardNumber: String,
+): Serializable
+
+data class CurrentBalance(
+    val balance: String,
+    val currency: String,
+    val updatedAt: Long
 ): Serializable

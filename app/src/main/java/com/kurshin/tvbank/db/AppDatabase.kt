@@ -2,13 +2,13 @@ package com.kurshin.tvbank.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.kurshin.tvbank.db.entity.ReportEntity
+import com.kurshin.tvbank.db.entity.BalanceEntity
 
 @Database(
     entities = [
-        ReportEntity::class
+        BalanceEntity::class
     ],
-    version = 1
+    version = 7
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun privat24Dao(): Privat24Dao

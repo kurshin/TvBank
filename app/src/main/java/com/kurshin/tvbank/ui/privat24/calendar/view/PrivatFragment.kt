@@ -51,9 +51,9 @@ class PrivatFragment : BrowseSupportFragment() {
 
     private fun setupUI(newDate: LocalDate) {
         dateStr = if (todayDate.year == newDate.year) {
-            newDate.toDateStr()
+            newDate.toCurrentYearTitle()
         } else {
-            newDate.toYearStr()
+            newDate.toYearTitle()
         }
         setupTitle()
         adapter = AdapterBuilder.buildMonthAdapter(newDate, resources)
@@ -61,8 +61,8 @@ class PrivatFragment : BrowseSupportFragment() {
 
     private fun setupObservables() {
         viewModel.currentBalance.observe(viewLifecycleOwner) {
-            it.info.cardbalance?.apply {
-                balanceStr = "${balance.substring(0, balance.indexOf("."))} ${card.currency}"
+            it.apply {
+                balanceStr = "${balance.substring(0, balance.indexOf("."))} $currency"
                 setupTitle()
             }
         }

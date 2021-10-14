@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.leanback.widget.Presenter
 import com.kurshin.tvbank.R
-import com.kurshin.tvbank.util.toDayStr
+import com.kurshin.tvbank.util.toDayTitle
 import java.io.Serializable
 import java.time.LocalDate
 
@@ -43,7 +43,7 @@ data class DayData(val type: Type = Type.DAY, val title: String = "", val day: L
     fun isDay() = type == Type.DAY
 
     fun getText(): String {
-        return if (isDay()) day.toDayStr() else title
+        return if (isDay()) day.toDayTitle() else title
     }
 
     enum class Type {
