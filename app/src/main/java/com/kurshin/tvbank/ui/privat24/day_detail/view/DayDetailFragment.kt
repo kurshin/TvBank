@@ -12,8 +12,6 @@ import com.kurshin.tvbank.databinding.FragmentPrivatDayDetailBinding
 import com.kurshin.tvbank.ui.privat24.calendar.presenter.DayData
 import com.kurshin.tvbank.ui.privat24.day_detail.view_model.PrivatDetailViewModel
 import com.kurshin.tvbank.util.showDialog
-import com.kurshin.tvbank.util.toPrivatRequestStr
-import com.kurshin.tvbank.util.toPrivatTitle
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
@@ -44,7 +42,6 @@ class DayDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupObservables()
         if (dayData.isDay()) {
-            val dateStr = dayData.day.toPrivatRequestStr()
             viewModel.getBalanceHistory(dayData.day)
         } else {
             val monthEndDate = LocalDate.of(
@@ -61,14 +58,12 @@ class DayDetailFragment: Fragment() {
             var cashAmount = 0.0
             var text = ""
 
-            it.forEach { transact ->
+            it.forEach { transaction ->
+                text += "${transaction.amount} - ${transaction.description}\n"
+                cashAmount += transaction.amount
 
-                text += "${transact.amount} - ${transact.description}\n"
-                cashAmount += transact.amount
+                binding.lineChart
             }
-
-            binding.testInfo.text = text
-            binding.testTitle.text = "${dayData.day.toPrivatTitle()}   $cashAmount UAH"
         }
 
         viewModel.requestError.observe(viewLifecycleOwner) {
