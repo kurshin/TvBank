@@ -22,7 +22,7 @@ class NetworkModule {
 
     companion object {
         const val BASE_URL = "https://api.privatbank.ua"
-        val loginLevel =  HttpLoggingInterceptor.Level.BASIC
+        val loginLevel =  HttpLoggingInterceptor.Level.BODY
     }
 
     @Singleton

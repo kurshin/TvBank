@@ -22,6 +22,7 @@ import com.kurshin.tvbank.ui.privat24.day_detail.view_model.PrivatDetailViewMode
 import com.kurshin.tvbank.util.showDialog
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
+import java.time.Month
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -65,12 +66,24 @@ class DayDetailFragment: Fragment() {
         if (dayData.isDay()) {
             viewModel.getBalanceHistory(dayData.day)
         } else {
-            val monthEndDate = LocalDate.of(
+//            val monthEndDate = LocalDate.of(
+//                dayData.day.year,
+//                dayData.day.month,
+//                dayData.day.lengthOfMonth()
+//            )
+//            viewModel.getBalanceHistory(dayData.day, monthEndDate)
+
+            val yearStartDate = LocalDate.of(
                 dayData.day.year,
-                dayData.day.month,
-                dayData.day.lengthOfMonth()
+                Month.JANUARY,
+                1
             )
-            viewModel.getBalanceHistory(dayData.day, monthEndDate)
+            val yearEndDate = LocalDate.of(
+                dayData.day.year,
+                Month.DECEMBER,
+                Month.DECEMBER.maxLength()
+            )
+            viewModel.getBalanceHistory(yearStartDate, yearEndDate)
         }
     }
 
@@ -83,7 +96,7 @@ class DayDetailFragment: Fragment() {
         //Part7
         binding.lineChart.axisRight.isEnabled = false
         binding.lineChart.getAxis(AxisDependency.LEFT).axisMinimum = 0f
-        binding.lineChart.getAxis(AxisDependency.LEFT).axisMaximum = 700000f
+        binding.lineChart.getAxis(AxisDependency.LEFT).axisMaximum = 1000000f
 
         //Part8
         binding.lineChart.setTouchEnabled(true)
@@ -102,12 +115,22 @@ class DayDetailFragment: Fragment() {
 
         val calendar = GregorianCalendar.getInstance()
 
+        var income = 0.0
+        var outcome = 0.0
+        var rest = 0.0
+
         balanceList.forEach {
             calendar.timeInMillis = it.trantime
-            entries.add(Entry(calendar.get(Calendar.DAY_OF_MONTH).toFloat(), it.rest.toFloat()).apply { data = it })
+            entries.add(Entry(calendar.get(Calendar.DAY_OF_YEAR).toFloat(), it.rest.toFloat()).apply { data = it })
+            if (it.amount > 0) {
+                income += it.amount
+            } else {
+                outcome += it.amount
+            }
+            rest = it.rest
         }
 
-        val lineDataSet = LineDataSet(entries, "Days")
+        val lineDataSet = LineDataSet(entries, "Income $income, Expenses: $outcome, Rest $rest")
 
         lineDataSet.setDrawValues(false)
         lineDataSet.setDrawFilled(true)

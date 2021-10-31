@@ -8,7 +8,7 @@ import com.kurshin.tvbank.db.entity.BalanceEntity
     entities = [
         BalanceEntity::class
     ],
-    version = 7
+    version = 9
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun privat24Dao(): Privat24Dao
